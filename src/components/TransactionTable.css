@@ -1,0 +1,100 @@
+/* Container padding */
+.table-wrapper {
+  width: 95%;
+  margin: 2rem auto;
+}
+
+.table-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+/* Row 1: Search on left, Select on right */
+.controls-row-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.search-container {
+  flex: 1;
+}
+
+.custom-search-input {
+  width: 100%;
+  max-width: 400px;
+  background: #111 !important;
+  border: 1px solid #333 !important;
+  color: #fff !important;
+  padding: 12px 20px;
+  border-radius: 12px;
+  outline: none;
+  font-size: 0.95rem;
+}
+
+.select-input {
+  width: 200px !important;
+}
+
+.select-input .ant-select-selector {
+  background-color: #111 !important;
+  border: 1px solid #333 !important;
+  border-radius: 12px !important;
+  height: 45px !important;
+  color: white !important;
+  display: flex;
+  align-items: center;
+}
+
+/* Row 2: Centered Radio Group */
+.controls-row-bottom {
+  display: flex;
+  justify-content: center; /* This centers the radio buttons */
+  width: 100%;
+}
+
+.input-radio .ant-radio-button-wrapper {
+  background: #111 !important;
+  border: 1px solid #333 !important;
+  color: #888 !important;
+  height: 40px;
+  line-height: 38px;
+  padding: 0 25px;
+  font-weight: 600;
+}
+
+.input-radio .ant-radio-button-wrapper-checked {
+  background: #fff !important;
+  color: #000 !important;
+  border-color: #fff !important;
+}
+
+/* Table Design */
+.table-container {
+  background: #000;
+  border: 1px solid #222;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.ant-table-thead > tr > th {
+  background: #16161a !important;
+  color: #fff !important;
+  border-bottom: 1px solid #333 !important;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  font-weight: 800 !important;
+}
+
+.ant-table-tbody > tr > td {
+  background: #000 !important;
+  color: #ccc !important;
+  border-bottom: 1px solid #111 !important;
+}
+
+.ant-table-tbody > tr:hover > td {
+  background: #0a0a0a !important;
+}
