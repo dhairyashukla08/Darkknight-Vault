@@ -1,0 +1,57 @@
+.signup-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 60px);
+ background: radial-gradient(circle at center, #111 0%, #000 100%);
+  padding: 20px;
+}
+
+form {
+  width: 100%;
+  max-width: 500px;
+  padding: 2.5rem;
+  background: #0a0a0a;
+  border: 1px solid #222;
+  border-radius: 15px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+}
+
+.title {
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 400;
+  margin-bottom: 2.5rem;
+  text-align: center;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.title span {
+  font-weight: 800;
+  background: linear-gradient(180deg, #ffffff 0%, #777 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-left: 5px;
+}
+
+.or-text {
+  color: #444;
+  text-align: center;
+  margin: 1.2rem 0;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  position: relative;
+}
+
+.or-text::before, .or-text::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 40%;
+  height: 1px;
+  background: #222;
+}
+.or-text::before { left: 0; }
+.or-text::after { right: 0; }

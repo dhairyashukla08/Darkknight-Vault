@@ -1,0 +1,74 @@
+.cards-container {
+  padding: 2rem 40px;
+  background-color: #000;
+  min-height: auto;
+
+  margin-top: 2rem; 
+}
+
+.my-row {
+  display: flex;
+  justify-content: center; /* Centering cards if they wrap */
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+/* Overriding Ant Design Card with a "Gunmetal" look */
+.ant-card.my-card {
+  /* Slightly lighter than pure black to create separation */
+  background: #16161a !important; 
+  border: 1px solid #2d2d33 !important;
+  border-radius: 16px !important;
+  flex: 1;
+  min-width: 320px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ant-card.my-card:hover {
+  /* Brighter border on hover */
+  border-color: #555 !important;
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+}
+
+/* Styling the Header: Brighter and more readable */
+.ant-card.my-card .ant-card-head {
+  border-bottom: 1px solid #2d2d33 !important;
+  /* Brighter grey for the title */
+  color: #e0e0e0 !important; 
+  font-size: 0.85rem !important;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.ant-card.my-card .ant-card-head-title {
+  font-weight: 600; /* Bolder title */
+}
+
+/* Styling the Body */
+.ant-card.my-card .ant-card-body {
+  padding: 30px !important;
+}
+
+/* Amount text: Crystal white with a subtle glow */
+.card-amount {
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-bottom: 25px;
+  font-family: 'Inter', sans-serif;
+  color: #ffffff; /* Solid bright white */
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.1); /* Subtle glow */
+}
+
+/* Optional: Different subtle accent for the bottom of the card */
+.ant-card.my-card::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, #333, transparent);
+  border-radius: 0 0 16px 16px;
+}

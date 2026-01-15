@@ -1,0 +1,108 @@
+.custom-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.custom-modal-backdrop {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+}
+
+.custom-modal-content {
+  position: relative;
+  background: #000000;
+  width: 90%;
+  max-width: 450px;
+  border-radius: 24px;
+  border: 1px solid #2d2d33;
+  padding: 30px;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+  z-index: 10000;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.modal-header h2 {
+  color: #fff;
+  font-weight: 800;
+  text-transform: uppercase;
+  font-size: 1.4rem;
+  margin: 0;
+}
+
+.close-x {
+  background: transparent;
+  border: none;
+  color: #555;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.close-x:hover { color: #fff; }
+
+.custom-modal-form .form-group {
+  margin-bottom: 20px;
+}
+
+.custom-modal-form label {
+  display: block;
+  color: #fff;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 1.5px;
+  margin-bottom: 8px;
+}
+
+.custom-modal-form input, 
+.custom-modal-form select {
+  width: 100%;
+  background: #111111;
+  border: 1px solid #333;
+  color: #fff;
+  padding: 12px 15px;
+  border-radius: 10px;
+  font-size: 1rem;
+  outline: none;
+}
+
+.custom-modal-form input:focus {
+  border-color: #fff;
+}
+
+/* Fix for standard date icon color */
+::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+
+.btn-blue {
+  width: 100%;
+  padding: 12px;
+  background: #fff; /* High contrast black/white look */
+  color: #000;
+  border: none;
+  border-radius: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.btn-blue:hover {
+  background: #ccc;
+}

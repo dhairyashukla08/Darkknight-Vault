@@ -1,0 +1,71 @@
+import React from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import "./Modals.css";
+
+const AddIncomeModal = ({ isOpen, onClose, onFinish }) => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const values = Object.fromEntries(formData.entries());
+    onFinish(values, "income");
+    e.target.reset();
+  };
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <div className="custom-modal-overlay">
+          <motion.div 
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }} 
+            exit={{ opacity: 0 }}
+            onClick={onClose} 
+            className="custom-modal-backdrop" 
+          />
+          <motion.div 
+            initial={{ scale: 0.9, y: 20, opacity: 0 }}
+            animate={{ scale: 1, y: 0, opacity: 1 }}
+            exit={{ scale: 0.9, y: 20, opacity: 0 }}
+            className="custom-modal-content"
+          >
+            <div className="modal-header">
+              <h2>Add Income</h2>
+              <button className="close-x" onClick={onClose}>&times;</button>
+            </div>
+            
+            <form onSubmit={handleSubmit} className="custom-modal-form">
+              <div className="form-group">
+                <label>Name</label>
+                <input name="name" type="text" placeholder="Salary, Freelance..." required />
+              </div>
+              
+              <div className="form-group">
+                <label>Amount</label>
+                <input name="amount" type="number" placeholder="0.00" required />
+              </div>
+              
+              <div className="form-group">
+                <label>Date</label>
+                <input name="date" type="date" required />
+              </div>
+              
+              <div className="form-group">
+                <label>Tag</label>
+                <select name="tag" required>
+                  <option value="" disabled selected>Select Tag</option>
+                  <option value="salary">Salary</option>
+                  <option value="freelance">Freelance</option>
+                  <option value="investment">Investment</option>
+                </select>
+              </div>
+              
+              <button type="submit" className="btn btn-blue">Add Income</button>
+            </form>
+          </motion.div>
+        </div>
+      )}
+    </AnimatePresence>
+  );
+};
+
+export default AddIncomeModal;
