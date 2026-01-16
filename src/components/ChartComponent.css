@@ -1,0 +1,81 @@
+/* Container for both charts */
+.charts-row {
+display: flex;
+  flex-direction: row; /* Force them to be in the same row */
+  justify-content: flex-start;
+  align-items: center;
+  gap: 2rem;
+  width: 95%;
+  margin: 2rem auto;
+  /* overflow-x: auto; */
+  padding-bottom: 1rem;
+}
+
+/* Individual Card Styling */
+.chart-card {
+ background: #000;
+  padding: 1.5rem;
+  border-radius: 16px;
+  border: 1px solid #222;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Line Chart takes more width (2/3 of the row) */
+.line-chart {
+ min-width: 1000px;
+  height: 500px;
+}
+
+/* Pie Chart takes less width (1/3 of the row) */
+.pie-chart {
+min-width: 350px;
+  height: 500px;
+}
+
+/* Titles inside the charts */
+.chart-title {
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Fallback message when no data is available */
+.no-data-msg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+  color: #555;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-transform: italic;
+}
+
+/* Responsive Design: Stack charts vertically on tablets and phones */
+@media (max-width: 1024px) {
+  .charts-row {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .line-chart, 
+  .pie-chart {
+    width: 100%;
+    flex: none; /* Reset flex-grow */
+  }
+
+  .chart-card {
+    min-height: 400px;
+  }
+}
+
+/* Ant Design Chart Overrides */
+canvas {
+  border-radius: 8px;
+}

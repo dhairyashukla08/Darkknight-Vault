@@ -2,7 +2,7 @@ import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import "./Modals.css";
 
-const AddIncomeModal = ({ isOpen, onClose, onFinish }) => {
+const AddIncomeModal = ({ isOpen, onClose, onFinish,tags }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -53,9 +53,11 @@ const AddIncomeModal = ({ isOpen, onClose, onFinish }) => {
                 <label>Tag</label>
                 <select name="tag" required>
                   <option value="" disabled selected>Select Tag</option>
-                  <option value="salary">Salary</option>
-                  <option value="freelance">Freelance</option>
-                  <option value="investment">Investment</option>
+                  {tags.map((tag, index) => (
+                  <option key={index} value={tag.toLowerCase()}>
+                    {tag}
+                  </option>
+                ))}
                 </select>
               </div>
               

@@ -4,14 +4,30 @@ import Cards from "../components/Cards";
 import { useState } from "react";
 import AddExpenseModal from "../components/AddExpenseModal";
 import AddIncomeModal from "../components/AddIncomeModal";
-import { addDoc, collection, doc, getDocs, query } from "firebase/firestore";
+import { addDoc, collection, deleteDoc, doc, getDocs, query } from "firebase/firestore";
 import { auth, db } from "../firebase";
 import { toast } from "react-toastify";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useEffect } from "react";
 import TransactionTable from "../components/TransactionTable";
+import ChartComponent from "../components/ChartComponent";
+import NoTransactions from "../components/NoTransaction";
+import BudgetStatus from "../components/BudgetStatus";
 
 const Dashboard = () => {
+  
+  const [incomeTags, setIncomeTags] = useState([
+    "Salary",
+    "Freelance",
+    "Investment",
+  ]);
+  const [expenseTags, setExpenseTags] = useState([
+    "Food",
+    "Education",
+    "Office",
+    "Rent",
+    "Groceries",
+  ]);
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(false);
   const [user] = useAuthState(auth);
@@ -19,9 +35,10 @@ const Dashboard = () => {
   const [isExpenseModalVisible, setIsExpenseModalVisible] = useState(false);
   const [isIncomeModalVisible, setIsIncomeModalVisible] = useState(false);
 
-  const [income,setIncome]=useState(0);
-  const [expense,setExpense]=useState(0);
-  const [totalBalance,setTotalBalance]=useState(0);
+  const [income, setIncome] = useState(0);
+  const [expense, setExpense] = useState(0);
+  const [totalBalance, setTotalBalance] = useState(0);
+  
 
   const showExpenseModal = () => {
     setIsExpenseModalVisible(true);
@@ -52,51 +69,48 @@ const Dashboard = () => {
     setIsIncomeModalVisible(false);
   };
 
-  async function addTransaction(transaction) {
+  async function addTransaction(transaction, many) {
     try {
       const docRef = await addDoc(
         collection(db, `users/${user.uid}/transactions`),
         transaction
       );
       console.log("Document Witten with Id", docRef.id);
-      toast.success("Transaction Added!!");
-      let newArr=transactions;
+      if (!many) toast.success("Transaction Added!!");
+      let newArr = transactions;
       newArr.push(transaction);
       setTransactions(newArr);
-      calculateBalance()
+      calculateBalance();
       // setTransactions((prevTransactions) => [...prevTransactions, transaction]);
     } catch (e) {
       console.error("Error Adding Doc", e);
-      toast.error("Couldn't add Transaction!!");
+      if (!many) toast.error("Couldn't add Transaction!!");
     }
   }
 
   useEffect(() => {
-   if (user) {
-    fetchTransactions();
-  }
+    if (user) {
+      fetchTransactions();
+    }
   }, [user]);
-  useEffect(()=>{
+  useEffect(() => {
     calculateBalance();
-  },[transactions]);
+  }, [transactions]);
 
-  function calculateBalance(){
-    let incomeTotal=0;
-    let expenseTotal=0;
+  function calculateBalance() {
+    let incomeTotal = 0;
+    let expenseTotal = 0;
 
-    transactions.forEach((transaction)=>{
-      if(transaction.type==="income")
-      {
-        incomeTotal+=transaction.amount;
+    transactions.forEach((transaction) => {
+      if (transaction.type === "income") {
+        incomeTotal += transaction.amount;
+      } else {
+        expenseTotal += transaction.amount;
       }
-      else{
-        expenseTotal+=transaction.amount;
-      }
-
     });
     setIncome(incomeTotal);
     setExpense(expenseTotal);
-    setTotalBalance(incomeTotal-expenseTotal);
+    setTotalBalance(incomeTotal - expenseTotal);
   }
 
   async function fetchTransactions() {
@@ -109,11 +123,35 @@ const Dashboard = () => {
         transactionsArray.push(doc.data());
       });
       setTransactions(transactionsArray);
-      console.log("transactionArray:" ,transactionsArray)
+      console.log("transactionArray:", transactionsArray);
       toast.success("transactions Fetched");
     }
     setLoading(false);
   }
+
+  let sortedTransactions = transactions.sort((a, b) => {
+    return new Date(a.date) - new Date(b.date);
+  });
+
+  async function resetBalance() {
+  setLoading(true);
+  try {
+    const q = query(collection(db, `users/${user.uid}/transactions`));
+    const querySnapshot = await getDocs(q);
+  
+    const deletePromises = querySnapshot.docs.map((document) => 
+      deleteDoc(doc(db, `users/${user.uid}/transactions`, document.id))
+    );
+    
+    await Promise.all(deletePromises);
+    setTransactions([]);
+    toast.success("Balance Reset! All transactions cleared.");
+  } catch (e) {
+    toast.error("Could not reset balance");
+    console.error(e);
+  }
+  setLoading(false);
+}
 
   return (
     <div>
@@ -123,23 +161,37 @@ const Dashboard = () => {
       ) : (
         <>
           <Cards
-          income={income}
-          expense={expense}
-          totalBalance={totalBalance}
+            income={income}
+            expense={expense}
+            totalBalance={totalBalance}
             showExpenseModal={showExpenseModal}
             showIncomeModal={showIncomeModal}
+            resetBalance={resetBalance}
           />
+          {transactions.length !== 0 ? (
+            <ChartComponent sortedTransactions={sortedTransactions} />
+          ) : (
+            <NoTransactions />
+          )}
           <AddIncomeModal
             isOpen={isIncomeModalVisible}
             onClose={handleIncomeCancel}
             onFinish={onFinish}
+            tags={incomeTags}
           ></AddIncomeModal>
           <AddExpenseModal
             isOpen={isExpenseModalVisible}
             onClose={handleExpenseCancel}
             onFinish={onFinish}
+            tags={expenseTags}
           ></AddExpenseModal>
-          <TransactionTable transactions={transactions}/>
+         
+          <TransactionTable
+            transactions={transactions}
+            addTransaction={addTransaction}
+            fetchTransactions={fetchTransactions}
+          />
+           <BudgetStatus expense={expense} />
         </>
       )}
     </div>

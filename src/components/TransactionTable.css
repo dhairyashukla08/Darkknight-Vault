@@ -11,59 +11,97 @@
   margin-bottom: 2rem;
 }
 
-/* Row 1: Search on left, Select on right */
+/* Row 1: 3-Column Center Logic */
 .controls-row-top {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 20px;
 }
 
-.search-container {
-  flex: 1;
+.search-container,
+.select-container {
+  flex: 1; /* These take equal space to push h2 to center */
+}
+
+.select-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.table-heading {
+  color: #fff;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin: 0;
+  font-size: 1.3rem;
+  text-align: center;
 }
 
 .custom-search-input {
   width: 100%;
-  max-width: 400px;
+  max-width: 350px;
   background: #111 !important;
   border: 1px solid #333 !important;
   color: #fff !important;
-  padding: 12px 20px;
-  border-radius: 12px;
+  padding: 10px 15px;
+  border-radius: 10px;
   outline: none;
-  font-size: 0.95rem;
-}
-
-.select-input {
-  width: 200px !important;
 }
 
 .select-input .ant-select-selector {
   background-color: #111 !important;
   border: 1px solid #333 !important;
-  border-radius: 12px !important;
-  height: 45px !important;
+  border-radius: 10px !important;
+  height: 40px !important;
   color: white !important;
   display: flex;
   align-items: center;
 }
 
-/* Row 2: Centered Radio Group */
+/* Row 2: Centered Sort + Right Side Buttons */
 .controls-row-bottom {
   display: flex;
-  justify-content: center; /* This centers the radio buttons */
-  width: 100%;
+  align-items: center;
+  justify-content: space-between;
 }
 
+.spacer-left {
+  flex: 1; /* Keeps the middle centered even if right side is wider */
+}
+
+.sort-group {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+}
+
+.csv-btn-group {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* CSV Buttons refinement */
+.csv-btn-group .btn {
+  margin-top: 0 !important;
+  padding: 8px 15px !important;
+  font-size: 0.75rem !important;
+  white-space: nowrap;
+}
+
+.csv-import-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Radio Style */
 .input-radio .ant-radio-button-wrapper {
   background: #111 !important;
   border: 1px solid #333 !important;
   color: #888 !important;
-  height: 40px;
-  line-height: 38px;
-  padding: 0 25px;
-  font-weight: 600;
 }
 
 .input-radio .ant-radio-button-wrapper-checked {
@@ -72,7 +110,7 @@
   border-color: #fff !important;
 }
 
-/* Table Design */
+/* Table Style */
 .table-container {
   background: #000;
   border: 1px solid #222;
@@ -84,17 +122,37 @@
   background: #16161a !important;
   color: #fff !important;
   border-bottom: 1px solid #333 !important;
-  text-transform: uppercase;
-  font-size: 0.75rem;
-  font-weight: 800 !important;
 }
 
 .ant-table-tbody > tr > td {
   background: #000 !important;
   color: #ccc !important;
-  border-bottom: 1px solid #111 !important;
 }
 
-.ant-table-tbody > tr:hover > td {
-  background: #0a0a0a !important;
+/* Moves the pagination numbers towards the left */
+.ant-table-pagination.ant-pagination {
+  justify-content: flex-start !important; /* This aligns it to the left */
+  padding-left: 20px !important; /* This gives it a small gap from the very edge */
+  margin-top: 20px !important;
+  margin-bottom: 20px !important;
+}
+
+.ant-pagination-item a {
+  color: #888 !important;
+}
+
+.ant-pagination-item-active {
+  background: #fff !important;
+  border-color: #fff !important;
+}
+
+.ant-pagination-item-active a {
+  color: #000 !important;
+}
+
+.ant-pagination-prev .ant-pagination-item-link,
+.ant-pagination-next .ant-pagination-item-link {
+  background-color: transparent !important;
+  color: #fff !important;
+  border: 1px solid #333 !important;
 }
