@@ -13,6 +13,8 @@ import TransactionTable from "../components/TransactionTable";
 import ChartComponent from "../components/ChartComponent";
 import NoTransactions from "../components/NoTransaction";
 import BudgetStatus from "../components/BudgetStatus";
+import GoalsTracker from "../components/GoalsTracker";
+import FinancialHealth from "../components/FinancialHealth";
 
 const Dashboard = () => {
   
@@ -191,7 +193,12 @@ const Dashboard = () => {
             addTransaction={addTransaction}
             fetchTransactions={fetchTransactions}
           />
-           <BudgetStatus expense={expense} />
+        <div className="floating-monitors-stack">
+          <FinancialHealth expense={expense} />
+          
+  <GoalsTracker income={income} expense={expense} />
+  <BudgetStatus expense={expense} />
+</div>
         </>
       )}
     </div>

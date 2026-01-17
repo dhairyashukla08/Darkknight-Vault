@@ -13,8 +13,8 @@
   padding: 0 40px;
   background-color: #000;
   color: #fff;
-  border-bottom: 1px solid #222; /* Darker border for a cleaner look */
-  position: sticky; /* Keeps header visible while scrolling */
+  border-bottom: 1px solid #222;
+  position: sticky; 
   top: 0;
   z-index: 1000;
 }
@@ -24,7 +24,7 @@
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 3px;
-  background: linear-gradient(90deg, #fff, #888); /* Subtle gradient */
+  background: linear-gradient(90deg, #fff, #888); 
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -32,12 +32,12 @@
 .navbar-user {
   display: flex;
   align-items: center;
-  gap: 20px; /* Increased gap for cleaner spacing */
+  gap: 20px; 
 }
 
-/* --- Currency Dropdown Styling --- */
+
 .currency-select {
-  background: #111; /* Darker than navbar */
+  background: #111; 
   color: #fff;
   border: 1px solid #444;
   padding: 6px 12px;
@@ -47,7 +47,7 @@
   font-weight: 700;
   outline: none;
   transition: all 0.3s ease;
-  appearance: none; /* Removes default browser arrow if you want to customize */
+  appearance: none; 
   -webkit-appearance: none;
   text-align: center;
 }
@@ -62,7 +62,7 @@
   color: #fff;
 }
 
-/* --- User Image & Logout --- */
+
 .user-image {
   width: 32px;
   height: 32px;
@@ -85,7 +85,7 @@
   cursor: pointer;
   border: 1.5px solid #fff;
   padding: 8px 18px;
-  border-radius: 4px; /* Slight rounding for a modern feel */
+  border-radius: 4px;
   transition: 0.3s;
   letter-spacing: 1px;
 }
@@ -96,7 +96,7 @@
   box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
 }
 
-/* Mobile Responsiveness */
+
 @media (max-width: 600px) {
   .navbar {
     padding: 0 20px;

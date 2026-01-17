@@ -3,20 +3,18 @@
   background-color: #000;
   min-height: auto;
 
-  margin-top: 2rem; 
+  margin-top: 2rem;
 }
 
 .my-row {
   display: flex;
-  justify-content: center; /* Centering cards if they wrap */
+  justify-content: center;
   gap: 20px;
   flex-wrap: wrap;
 }
 
-/* Overriding Ant Design Card with a "Gunmetal" look */
 .ant-card.my-card {
-  /* Slightly lighter than pure black to create separation */
-  background: #16161a !important; 
+  background: #16161a !important;
   border: 1px solid #2d2d33 !important;
   border-radius: 16px !important;
   flex: 1;
@@ -26,42 +24,36 @@
 }
 
 .ant-card.my-card:hover {
-  /* Brighter border on hover */
   border-color: #555 !important;
   transform: translateY(-8px);
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
 }
 
-/* Styling the Header: Brighter and more readable */
 .ant-card.my-card .ant-card-head {
   border-bottom: 1px solid #2d2d33 !important;
-  /* Brighter grey for the title */
-  color: #e0e0e0 !important; 
+  color: #e0e0e0 !important;
   font-size: 0.85rem !important;
   text-transform: uppercase;
   letter-spacing: 2px;
 }
 
 .ant-card.my-card .ant-card-head-title {
-  font-weight: 600; /* Bolder title */
+  font-weight: 600;
 }
 
-/* Styling the Body */
 .ant-card.my-card .ant-card-body {
   padding: 30px !important;
 }
 
-/* Amount text: Crystal white with a subtle glow */
 .card-amount {
   font-size: 2.2rem;
   font-weight: 800;
   margin-bottom: 25px;
-  font-family: 'Inter', sans-serif;
-  color: #ffffff; /* Solid bright white */
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.1); /* Subtle glow */
+  font-family: "Inter", sans-serif;
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
 }
 
-/* Optional: Different subtle accent for the bottom of the card */
 .ant-card.my-card::after {
   content: "";
   position: absolute;

@@ -85,7 +85,7 @@
   border-color: #fff;
 }
 
-/* Fix for standard date icon color */
+
 ::-webkit-calendar-picker-indicator {
   filter: invert(1);
 }
@@ -93,7 +93,7 @@
 .btn-blue {
   width: 100%;
   padding: 12px;
-  background: #fff; /* High contrast black/white look */
+  background: #fff; 
   color: #000;
   border: none;
   border-radius: 10px;

@@ -1,12 +1,24 @@
 import React from 'react';
 import {Line, Pie} from "@ant-design/charts";
 import "./ChartComponent.css"
+import { useCurrency } from '../context/CurrencyContext';
 
 
 const ChartComponent = ({sortedTransactions}) => {
+
+  const { formatAmount, currency } = useCurrency();
+
+  const currencyMap = {
+    INR: { symbol: '₹', rate: 1 },
+    USD: { symbol: '$', rate: 0.012 }, 
+    EUR: { symbol: '€', rate: 0.011 },
+  };
+
+  const currentRate = currencyMap[currency].rate;
+
     const lineData = sortedTransactions.map((item) => ({
     date: item.date,
-    amount: item.amount,
+     amount: item.amount * currentRate,
   }));
 
      const spendingData = sortedTransactions
@@ -14,9 +26,9 @@ const ChartComponent = ({sortedTransactions}) => {
     .reduce((acc, obj) => {
       let found = acc.find((item) => item.tag === obj.tag);
       if (found) {
-        found.amount += obj.amount;
+        found.amount += obj.amount * currentRate;
       } else {
-        acc.push({ tag: obj.tag, amount: obj.amount });
+        acc.push({ tag: obj.tag,amount: obj.amount * currentRate });
       }
       return acc;
     }, []);
@@ -54,12 +66,12 @@ const ChartComponent = ({sortedTransactions}) => {
   return (
   <div className="charts-row">
       <div className="chart-card line-chart">
-        <h2 className="chart-title">Financial Statistics</h2>
+        <h2 className="chart-title">Financial Statistics({currency})</h2>
         <Line {...lineConfig} />
       </div>
 
       <div className="chart-card pie-chart">
-        <h2 className="chart-title">Total Spendings</h2>
+        <h2 className="chart-title">Total Spendings({currency})</h2>
         {spendingData.length > 0 ? (
           <Pie {...pieConfig} />
         ) : (

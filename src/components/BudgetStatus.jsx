@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Progress } from 'antd';
-import { SettingOutlined, CloseOutlined } from '@ant-design/icons';
+import { SettingOutlined, CloseOutlined,WalletOutlined } from '@ant-design/icons';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCurrency } from '../context/CurrencyContext';
 import './BudgetStatus.css';
@@ -32,7 +32,6 @@ const BudgetStatus = ({ expense }) => {
         transition={{ type: 'spring', stiffness: 200, damping: 20 }}
         className={`budget-floating-card ${percentageSpent > 90 ? 'critical' : ''}`}
       >
-        {/* INITIAL STATE: Just the Progress Circle */}
         <div className="gauge-wrapper-initial">
           <Progress
             type="circle"
@@ -41,10 +40,17 @@ const BudgetStatus = ({ expense }) => {
             strokeColor={percentageSpent > 90 ? '#ff4d4f' : '#ffffff'}
             trailColor="rgba(255,255,255,0.1)"
             strokeWidth={12}
+            format={() => (
+              <WalletOutlined 
+                style={{ 
+                  fontSize: '18px', 
+                  color: percentageSpent > 90 ? '#ff4d4f' : '#fff' 
+                }} 
+              />
+            )}
           />
         </div>
 
-        {/* HOVER STATE: Full Component Content */}
         <div className="expanded-content">
           <div className="budget-header">
             <p className="budget-label">Vault Monitor</p>
@@ -73,7 +79,6 @@ const BudgetStatus = ({ expense }) => {
         </div>
       </motion.div>
 
-      {/* Custom Framer Motion Modal */}
       <AnimatePresence>
   {isModalOpen && (
     <div className="modal-overlay">

@@ -1,4 +1,3 @@
-/* Container padding */
 .table-wrapper {
   width: 95%;
   margin: 2rem auto;
@@ -11,7 +10,6 @@
   margin-bottom: 2rem;
 }
 
-/* Row 1: 3-Column Center Logic */
 .controls-row-top {
   display: flex;
   justify-content: space-between;
@@ -20,7 +18,7 @@
 
 .search-container,
 .select-container {
-  flex: 1; /* These take equal space to push h2 to center */
+  flex: 1;
 }
 
 .select-container {
@@ -59,7 +57,6 @@
   align-items: center;
 }
 
-/* Row 2: Centered Sort + Right Side Buttons */
 .controls-row-bottom {
   display: flex;
   align-items: center;
@@ -67,7 +64,7 @@
 }
 
 .spacer-left {
-  flex: 1; /* Keeps the middle centered even if right side is wider */
+  flex: 1;
 }
 
 .sort-group {
@@ -83,7 +80,6 @@
   gap: 10px;
 }
 
-/* CSV Buttons refinement */
 .csv-btn-group .btn {
   margin-top: 0 !important;
   padding: 8px 15px !important;
@@ -97,7 +93,6 @@
   justify-content: center;
 }
 
-/* Radio Style */
 .input-radio .ant-radio-button-wrapper {
   background: #111 !important;
   border: 1px solid #333 !important;
@@ -110,7 +105,6 @@
   border-color: #fff !important;
 }
 
-/* Table Style */
 .table-container {
   background: #000;
   border: 1px solid #222;
@@ -129,10 +123,9 @@
   color: #ccc !important;
 }
 
-/* Moves the pagination numbers towards the left */
 .ant-table-pagination.ant-pagination {
-  justify-content: flex-start !important; /* This aligns it to the left */
-  padding-left: 20px !important; /* This gives it a small gap from the very edge */
+  justify-content: flex-start !important;
+  padding-left: 20px !important;
   margin-top: 20px !important;
   margin-bottom: 20px !important;
 }
