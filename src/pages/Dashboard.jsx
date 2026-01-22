@@ -15,6 +15,8 @@ import NoTransactions from "../components/NoTransaction";
 import BudgetStatus from "../components/BudgetStatus";
 import GoalsTracker from "../components/GoalsTracker";
 import FinancialHealth from "../components/FinancialHealth";
+import DarkknightLoader from "../components/DarkknightLoader";
+import DarkknightFooter from "../components/Footer";
 
 const Dashboard = () => {
   
@@ -79,9 +81,7 @@ const Dashboard = () => {
       );
       console.log("Document Witten with Id", docRef.id);
       if (!many) toast.success("Transaction Added!!");
-      let newArr = transactions;
-      newArr.push(transaction);
-      setTransactions(newArr);
+      setTransactions([...transactions, { ...transaction, id: docRef.id }]);
       calculateBalance();
       // setTransactions((prevTransactions) => [...prevTransactions, transaction]);
     } catch (e) {
@@ -122,7 +122,10 @@ const Dashboard = () => {
       const querySnapshot = await getDocs(q);
       let transactionsArray = [];
       querySnapshot.forEach((doc) => {
-        transactionsArray.push(doc.data());
+        transactionsArray.push({ 
+        ...doc.data(), 
+        id: doc.id 
+      });
       });
       setTransactions(transactionsArray);
       console.log("transactionArray:", transactionsArray);
@@ -136,6 +139,11 @@ const Dashboard = () => {
   });
 
   async function resetBalance() {
+     const confirmed = window.confirm(
+    "⚠️ This will delete ALL transactions permanently. Are you sure?"
+  );
+  
+  if (!confirmed) return;
   setLoading(true);
   try {
     const q = query(collection(db, `users/${user.uid}/transactions`));
@@ -155,11 +163,23 @@ const Dashboard = () => {
   setLoading(false);
 }
 
+async function deleteTransaction(id) {
+  try {
+    await deleteDoc(doc(db, `users/${user.uid}/transactions`, id));
+    setTransactions(transactions.filter(t => t.id !== id));
+    toast.success("Transaction deleted!");
+    calculateBalance();
+  } catch (e) {
+    toast.error("Couldn't delete transaction");
+    console.error(e);
+  }
+}
+
   return (
     <div>
       <Header />
       {loading ? (
-        <p>Loading...</p>
+        <DarkknightLoader />
       ) : (
         <>
           <Cards
@@ -192,7 +212,9 @@ const Dashboard = () => {
             transactions={transactions}
             addTransaction={addTransaction}
             fetchTransactions={fetchTransactions}
+             deleteTransaction={deleteTransaction}
           />
+          <DarkknightFooter/>
         <div className="floating-monitors-stack">
           <FinancialHealth expense={expense} />
           

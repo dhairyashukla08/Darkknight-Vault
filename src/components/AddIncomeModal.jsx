@@ -1,12 +1,26 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import "./Modals.css";
+import { toast } from "react-toastify";
 
 const AddIncomeModal = ({ isOpen, onClose, onFinish,tags }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const values = Object.fromEntries(formData.entries());
+    const amount = parseFloat(values.amount);
+  if (isNaN(amount) || amount <= 0) {
+    toast.error("Please enter a valid amount greater than 0");
+    return;
+  }
+   const selectedDate = new Date(values.date);
+  const today = new Date();
+  today.setHours(23, 59, 59, 999);
+  
+  if (selectedDate > today) {
+    toast.error("Transaction date cannot be in the future");
+    return;
+  }
     onFinish(values, "income");
     e.target.reset();
   };

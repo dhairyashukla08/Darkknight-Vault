@@ -4,6 +4,7 @@ import "./TransactionTable.css";
 import Button from "./Button";
 import { unparse, parse } from "papaparse";
 import { toast } from "react-toastify";
+import DeleteOutlined from '@ant-design/icons/DeleteOutlined';   
 
 import { useCurrency } from "../context/CurrencyContext";
 
@@ -11,6 +12,7 @@ const TransactionTable = ({
   transactions,
   addTransaction,
   fetchTransactions,
+  deleteTransaction,
 }) => {
   const { Option } = Select;
   const [search, setSearch] = useState("");
@@ -55,6 +57,20 @@ const TransactionTable = ({
       key: "date",
       sorter: (a, b) => new Date(a.date) - new Date(b.date),
     },
+    {
+    title: "Actions",
+    key: "actions",
+    render: (_, record) => (
+      <DeleteOutlined 
+        onClick={() => {
+          if (window.confirm('Delete this transaction?')) {
+            deleteTransaction(record.id);
+          }
+        }}
+        style={{ color: '#ff4d4f', cursor: 'pointer' }}
+      />
+    ),
+  },
   ];
 
   function exportCSV() {

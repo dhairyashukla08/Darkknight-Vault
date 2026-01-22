@@ -17,6 +17,11 @@ const BudgetStatus = ({ expense }) => {
   const budgetRemaining = monthlyBudget - expense;
 
   const handleSave = () => {
+    const budgetValue = Number(tempBudget); 
+  if (isNaN(budgetValue) || budgetValue <= 0) {
+    toast.error("Please enter a valid budget amount");
+    return;
+  }
     setMonthlyBudget(tempBudget);
     localStorage.setItem("vault_budget", tempBudget);
     setIsModalOpen(false);

@@ -13,6 +13,8 @@ import { auth, db, provider } from "../firebase";
 import { setDoc, doc, getDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 
+import { validateEmail,validatePassword } from "../Utils/validators";
+
 const SignUpSignIn = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -22,60 +24,139 @@ const SignUpSignIn = () => {
   const [loginForm, setLoginForm] = useState(false);
   const navigate = useNavigate();
 
+  // function signUpWithEmail() {
+  //   setLoading(true);
+  //   if (name != "" && email != "" && password != "" && confirmPassword != "") {
+  //     if (password === confirmPassword) {
+  //       createUserWithEmailAndPassword(auth, email, password)
+  //         .then((userCredential) => {
+  //           const user = userCredential.user;
+  //           console.log(user);
+  //           toast.success("User Created Successfully!!");
+  //           setLoading(false);
+  //           setName("");
+  //           setConfirmPassword("");
+  //           setEmail("");
+  //           setPassword("");
+  //           createDoc(user);
+  //           navigate("/dashboard");
+  //         })
+  //         .catch((error) => {
+  //           const errorCode = error.code;
+  //           const errorMessage = error.message;
+  //           toast.error(errorMessage);
+  //           setLoading(false);
+  //         });
+  //     } else {
+  //       toast.error("Password and Confirm Password does not match ");
+  //       setLoading(false);
+  //     }
+  //   } else {
+  //     toast.error("All Fields Are Mandatory");
+  //     setLoading(false);
+  //   }
+  // }
+
   function signUpWithEmail() {
     setLoading(true);
-    if (name != "" && email != "" && password != "" && confirmPassword != "") {
-      if (password === confirmPassword) {
-        createUserWithEmailAndPassword(auth, email, password)
-          .then((userCredential) => {
-            const user = userCredential.user;
-            console.log(user);
-            toast.success("User Created Successfully!!");
-            setLoading(false);
-            setName("");
-            setConfirmPassword("");
-            setEmail("");
-            setPassword("");
-            createDoc(user);
-            navigate("/dashboard");
-          })
-          .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            toast.error(errorMessage);
-            setLoading(false);
-          });
-      } else {
-        toast.error("Password and Confirm Password does not match ");
-        setLoading(false);
-      }
-    } else {
+    
+    if (name === "" || email === "" || password === "" || confirmPassword === "") {
       toast.error("All Fields Are Mandatory");
       setLoading(false);
+      return;
     }
+    
+    if (!validateEmail(email)) {
+      toast.error("Please enter a valid email address");
+      setLoading(false);
+      return;
+    }
+    
+    const passwordCheck = validatePassword(password);
+    if (!passwordCheck.isValid) {
+      toast.error("Password must be at least 8 characters with uppercase, lowercase, and number");
+      setLoading(false);
+      return;
+    }
+    
+    if (password !== confirmPassword) {
+      toast.error("Password and Confirm Password do not match");
+      setLoading(false);
+      return;
+    }
+    
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log(user);
+        toast.success("User Created Successfully!!");
+        setLoading(false);
+        setName("");
+        setConfirmPassword("");
+        setEmail("");
+        setPassword("");
+        createDoc(user);
+        navigate("/dashboard");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        toast.error(errorMessage);
+        setLoading(false);
+      });
   }
+
+  // function loginUsingEmail() {
+  //   setLoading(true);
+  //   if (email != "" && password != "") {
+  //     signInWithEmailAndPassword(auth, email, password)
+  //       .then((userCredential) => {
+  //         const user = userCredential.user;
+  //         toast.success("User Logged in!!");
+  //         console.log("user logged in ", user);
+  //         setLoading(false);
+  //         navigate("/dashboard");
+  //       })
+  //       .catch((error) => {
+  //         const errorCode = error.code;
+  //         const errorMessage = error.message;
+  //         setLoading(false);
+  //         toast.error(errorMessage);
+  //       });
+  //   } else {
+  //     toast.error("All Fields Are Mandatory");
+  //     setLoading(false);
+  //   }
+  // }
 
   function loginUsingEmail() {
     setLoading(true);
-    if (email != "" && password != "") {
-      signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          const user = userCredential.user;
-          toast.success("User Logged in!!");
-          console.log("user logged in ", user);
-          setLoading(false);
-          navigate("/dashboard");
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          setLoading(false);
-          toast.error(errorMessage);
-        });
-    } else {
+    if (email === "" || password === "") {
       toast.error("All Fields Are Mandatory");
       setLoading(false);
+      return;
     }
+
+    if (!validateEmail(email)) {
+      toast.error("Please enter a valid email address");
+      setLoading(false);
+      return;
+    }
+    
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        toast.success("User Logged in!!");
+        console.log("user logged in ", user);
+        setLoading(false);
+        navigate("/dashboard");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        setLoading(false);
+        toast.error(errorMessage);
+      });
   }
 
   async function createDoc(user) {
